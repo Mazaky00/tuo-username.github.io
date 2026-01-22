@@ -27,7 +27,9 @@ Questo è un <a class="wiki-link" href="termine1.html" data-preview="termine1">t
 
 <textarea id="editor" rows="10" cols="80">Scrivi qui il tuo testo...</textarea>
 <div id="preview" style="border:1px solid #ccc; padding:10px; margin-top:10px;"></div>
-
+  
+<button id="saveBtn">💾 Salva su GitHub</button>
+<p id="saveStatus"></p>
 <script>
 // ---------------------- HOVER PREVIEW ----------------------
 document.querySelectorAll('.wiki-link').forEach(link => {
