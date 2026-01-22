@@ -27,18 +27,16 @@ a:hover {
   font-size: 0.9em;
   z-index: 1000;
 
-  opacity: 0;                  /* invisibile */
-  pointer-events: none;        /* mouse passa attraverso */
-  transition: opacity 0.10s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease-in-out; /* fade più veloce */
 }
 
-/* Quando la classe show è attiva → fade-in */
 .wiki-preview.show {
   opacity: 1;
-  pointer-events: auto;        /* attiva l’interazione */
+  pointer-events: auto;
 }
 
-/* Immagini nella preview */
 .wiki-preview img {
   width: 100%;
   margin-bottom: 6px;
@@ -46,7 +44,18 @@ a:hover {
   display: block;
 }
 
-/* Se l'immagine non esiste, non mostrare nulla */
 .wiki-preview img:not([src]) {
   display: none;
+}
+
+/* Editor live */
+#editor {
+  width: 100%;
+  font-family: monospace;
+  font-size: 1em;
+}
+
+#preview {
+  min-height: 50px;
+  background: #f9f9f9;
 }
