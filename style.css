@@ -1,3 +1,4 @@
+/* Testo generale */
 body {
   font-family: sans-serif;
   max-width: 800px;
@@ -13,34 +14,9 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Preview hover */
 .wiki-preview {
-  display: none;
-  position: absolute;
-  width: 320px;
-  background: white;
-  border: 1px solid #a2a9b1;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2);
-  padding: 10px;
-  font-size: 0.9em;
-  z-index: 1000;
-}
-.wiki-preview img {
-  width: 100%;
-  margin-bottom: 6px;
-  border-radius: 2px;
-}
-.wiki-preview img {
-  width: 100%;
-  margin-bottom: 6px;
-  border-radius: 2px;
-  display: block;
-}
-
-.wiki-preview img:not([src]) {
-  display: none;
-}
-.wiki-preview {
-  display: none;
+  display: none;           /* nascosta di default */
   position: absolute;
   width: 320px;
   background: white;
@@ -50,11 +26,25 @@ a:hover {
   font-size: 0.9em;
   z-index: 1000;
 
-  opacity: 0;
+  opacity: 0;              /* per fade-in */
   transition: opacity 0.2s ease-in-out;
 }
 
+/* Quando la classe show è attiva */
 .wiki-preview.show {
   display: block;
   opacity: 1;
+}
+
+/* Immagini nella preview */
+.wiki-preview img {
+  width: 100%;
+  margin-bottom: 6px;
+  border-radius: 2px;
+  display: block;
+}
+
+/* Se src è vuoto o mancante, nascondi l'immagine */
+.wiki-preview img:not([src]) {
+  display: none;
 }
