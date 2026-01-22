@@ -29,7 +29,7 @@ a:hover {
 
   opacity: 0;                  /* invisibile */
   pointer-events: none;        /* mouse passa attraverso */
-  transition: opacity 0.25s ease-in-out;
+  transition: opacity 0.10s ease-in-out;
 }
 
 /* Quando la classe show è attiva → fade-in */
