@@ -84,6 +84,60 @@ function updatePreview() {
 
 editor.addEventListener('input', updatePreview);
 updatePreview();
+  const saveBtn = document.getElementById('saveBtn');
+const saveStatus = document.getElementById('saveStatus');
+
+// --- CONFIGURA QUI ---
+const repoOwner = 'mazaky00';      // tuo username GitHub
+const repoName = 'tuo-repo';       // nome del repository
+const filePath = 'contenuto.html'; // file che vuoi aggiornare
+const branch = 'main';             // branch
+const githubToken = 'INSERISCI_IL_TUO_TOKEN_QUI';
+
+// Funzione Save
+saveBtn.addEventListener('click', async () => {
+  saveStatus.innerText = 'Salvataggio in corso...';
+
+  try {
+    // Primo passo: ottieni SHA del file se esiste
+    const getRes = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}?ref=${branch}`, {
+      headers: { Authorization: `token ${githubToken}` }
+    });
+
+    let sha = null;
+    if(getRes.status === 200) {
+      const data = await getRes.json();
+      sha = data.sha;
+    }
+
+    // Secondo passo: salva il contenuto
+    const content = btoa(unescape(encodeURIComponent(editor.value))); // base64
+
+    const res = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${githubToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Aggiornamento dal MiniWiki editor',
+        content: content,
+        branch: branch,
+        sha: sha
+      })
+    });
+
+    if(res.ok) {
+      saveStatus.innerText = '✅ Salvataggio completato!';
+    } else {
+      const err = await res.json();
+      saveStatus.innerText = '❌ Errore: ' + err.message;
+    }
+
+  } catch(err) {
+    saveStatus.innerText = '❌ Errore: ' + err.message;
+  }
+});
 </script>
 
 </body>
