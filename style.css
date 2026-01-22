@@ -29,3 +29,32 @@ a:hover {
   margin-bottom: 6px;
   border-radius: 2px;
 }
+.wiki-preview img {
+  width: 100%;
+  margin-bottom: 6px;
+  border-radius: 2px;
+  display: block;
+}
+
+.wiki-preview img:not([src]) {
+  display: none;
+}
+.wiki-preview {
+  display: none;
+  position: absolute;
+  width: 320px;
+  background: white;
+  border: 1px solid #a2a9b1;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  padding: 10px;
+  font-size: 0.9em;
+  z-index: 1000;
+
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.wiki-preview.show {
+  display: block;
+  opacity: 1;
+}
