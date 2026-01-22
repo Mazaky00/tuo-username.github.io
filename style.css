@@ -3,7 +3,7 @@ body {
   font-family: sans-serif;
   max-width: 800px;
   margin: auto;
-  line-height: 1.6;
+  line-height: 1.0;
 }
 
 /* Link */
@@ -11,7 +11,10 @@ a {
   color: #0645ad;
   text-decoration: none;
 }
-
+p, h1, h2 {
+    margin: 0; /* Elimina lo spazio sopra e sotto i testi */
+    padding: 2px 0; /* Aggiunge solo un minimo di respiro */
+}
 a:hover {
   text-decoration: underline;
 }
