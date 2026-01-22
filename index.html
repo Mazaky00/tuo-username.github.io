@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Il mio progetto</title>
+
+<style>
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+a.wiki-link {
+  color: #0645ad;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.wiki-preview {
+  display: none;
+  position: absolute;
+  width: 320px;
+  background: white;
+  border: 1px solid #a2a9b1;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  padding: 10px;
+  font-size: 0.9em;
+  z-index: 1000;
+}
+
+.wiki-preview h4 {
+  margin-top: 0;
+  font-size: 1em;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Il mio testo</h1>
+
+<p>
+Questo è un testo di prova con un
+<a class="wiki-link" data-preview="termine1">termine speciale</a>
+come su Wikipedia.
+</p>
+
+<div id="termine1" class="wiki-preview">
+  <h4>Termine speciale</h4>
+  <p>
+  Questa è una descrizione breve che appare passando il mouse,
+  proprio come una preview enciclopedica.
+  </p>
+</div>
+
+<script>
+document.querySelectorAll('.wiki-link').forEach(link => {
+  const preview = document.getElementById(link.dataset.preview);
+
+  link.addEventListener('mouseenter', e => {
+    preview.style.display = 'block';
+    preview.style.top = e.pageY + 15 + 'px';
+    preview.style.left = e.pageX + 15 + 'px';
+  });
+
+  link.addEventListener('mouseleave', () => {
+    preview.style.display = 'none';
+  });
+});
+</script>
+
+</body>
+</html>
