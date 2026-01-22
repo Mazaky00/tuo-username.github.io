@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Ricerca Peptidi</title>
-
 <link rel="stylesheet" href="style.css">
 </head>
-<div id="wiki-preview" class="wiki-preview"></div>
+
 <body>
 
 <h1>Ricerca e studio Peptidi</h1>
@@ -65,54 +64,56 @@ Ho tutto lo spazio che voglio per parlarne per bene quindi… si.
 <strong>OBBIETTIVO:</strong> chiarire le idee <strong>MIE e VOSTRE</strong>. Tutto ciò che scrivo è ciò che ritengo <strong>corretto</strong>.
 </p>
 
-Questo è un <a class="wiki-link" href="termine speciale.html" data-preview="termine1">termine speciale</a> con preview.
+<p>
+Questo è un <a class="wiki-link" data-file="previews/termine-speciale.html">termine speciale</a> con preview.
 </p>
 
-<div id="termine1" class="wiki-preview">
-  <h4>Termine speciale</h4>
- <img src="img/icant.jpg" alt="Termine speciale" style="max-width:300px; max-height:200px; object-fit:cover;">
-  <p>Ragazzo nero constipato</p>
-</div>
-  
-<p>Questo ragazzuolo nel fumetto esiste ma nella serie no!!! Stupido <a class="wiki-link" href="è stupido.html" data-preview="coglione">coglione</a></p>
+<p>
+Questo ragazzuolo nel fumetto esiste ma nella serie no!!! Stupido <a class="wiki-link" data-file="previews/coglione.html">coglione</a>
+</p>
 
-  <div id="coglione" class="wiki-preview">
-  <h4>Colione</h4>
-  <img src="img/t.jpg" alt="no image">
-  <p>Omar Boufares no è un esempio</p>
-</div>
-  
+<!-- Popup universale -->
+<div id="wiki-preview" class="wiki-preview"></div>
+
+<!-- SCRIPT: popup dinamici -->
 <script>
-// ---------------------- HOVER PREVIEW ----------------------
+const popup = document.getElementById("wiki-preview");
+
 document.querySelectorAll('.wiki-link').forEach(link => {
-  const preview = document.getElementById(link.dataset.preview);
+  link.addEventListener('mouseenter', async e => {
+    const file = link.dataset.file;
+    if(file) {
+      try {
+        const res = await fetch(file);
+        const html = await res.text();
+        popup.innerHTML = html;
+      } catch(err) {
+        popup.innerHTML = "<p>Contenuto non disponibile</p>";
+      }
+    }
 
-  // Carica testo della pagina collegata
-
-
-  function updatePosition(e) {
-    const rect = preview.getBoundingClientRect();
+    const rect = popup.getBoundingClientRect();
     let x = e.pageX + 15;
     let y = e.pageY + 15;
-
-    if (x + rect.width > window.innerWidth) x = e.pageX - rect.width - 15;
-    if (y + rect.height > window.innerHeight) y = e.pageY - rect.height - 15;
-
-    preview.style.left = x + 'px';
-    preview.style.top = y + 'px';
-  }
-
-  link.addEventListener('mouseenter', e => {
-    preview.classList.add('show');
-    updatePosition(e);
+    if(x + rect.width > window.innerWidth) x = e.pageX - rect.width - 15;
+    if(y + rect.height > window.innerHeight) y = e.pageY - rect.height - 15;
+    popup.style.left = x + "px";
+    popup.style.top = y + "px";
+    popup.classList.add("show");
   });
 
   link.addEventListener('mousemove', e => {
-    updatePosition(e);
+    const rect = popup.getBoundingClientRect();
+    let x = e.pageX + 15;
+    let y = e.pageY + 15;
+    if(x + rect.width > window.innerWidth) x = e.pageX - rect.width - 15;
+    if(y + rect.height > window.innerHeight) y = e.pageY - rect.height - 15;
+    popup.style.left = x + "px";
+    popup.style.top = y + "px";
   });
 
   link.addEventListener('mouseleave', () => {
-    preview.classList.remove('show');
+    popup.classList.remove("show");
   });
 });
 </script>
