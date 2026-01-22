@@ -48,14 +48,3 @@ a:hover {
   display: none;
 }
 
-/* Editor live */
-#editor {
-  width: 100%;
-  font-family: monospace;
-  font-size: 1em;
-}
-
-#preview {
-  min-height: 50px;
-  background: #f9f9f9;
-}
