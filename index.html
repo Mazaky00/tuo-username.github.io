@@ -28,31 +28,19 @@ Questo è un testo di prova con un
 </div>
 
 <script>
-document.querySelectorAll('.wiki-link').forEach(link => {
-  const preview = document.getElementById(link.dataset.preview);
+link.addEventListener('mouseenter', e => {
+  preview.classList.add('show');
+  const rect = preview.getBoundingClientRect();
+  let x = e.pageX + 15;
+  let y = e.pageY + 15;
+  if (x + rect.width > window.innerWidth) x = e.pageX - rect.width - 15;
+  if (y + rect.height > window.innerHeight) y = e.pageY - rect.height - 15;
+  preview.style.left = x + 'px';
+  preview.style.top = y + 'px';
+});
 
-  link.addEventListener('mouseenter', e => {
-    preview.style.display = 'block';
-
-    const rect = preview.getBoundingClientRect();
-    let x = e.pageX + 15;
-    let y = e.pageY + 15;
-
-    if (x + rect.width > window.innerWidth) {
-      x = e.pageX - rect.width - 15;
-    }
-
-    if (y + rect.height > window.innerHeight) {
-      y = e.pageY - rect.height - 15;
-    }
-
-    preview.style.left = x + 'px';
-    preview.style.top = y + 'px';
-  });
-
-  link.addEventListener('mouseleave', () => {
-    preview.style.display = 'none';
-  });
+link.addEventListener('mouseleave', () => {
+  preview.classList.remove('show');
 });
 </script>
 
