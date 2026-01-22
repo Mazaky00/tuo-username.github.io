@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Termine 2</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Termine 2</h1>
+<p>Questa è la descrizione completa del termine 2.</p>
+<p><a href="index.html">← Torna alla pagina principale</a></p>
+</body>
+</html>
