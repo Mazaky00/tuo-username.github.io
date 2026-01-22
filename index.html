@@ -2,36 +2,38 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Il mio progetto</title>
-
-
+<title>Mini Wikipedia</title>
+<link rel="stylesheet" href="style.css">
 </head>
-  <link rel="stylesheet" href="style.css">
+
 <body>
 
-<h1>Il mio testo</h1>
+<h1>Mini Wikipedia</h1>
 
 <p>
-Questo è un testo di prova con un
-<a class="wiki-link" href="termine1.html" data-preview="termine1">
-  termine speciale
-</a>
+Questo è un <a class="wiki-link" href="termine1.html" data-preview="termine1">termine speciale</a> con preview.
 </p>
 
 <div id="termine1" class="wiki-preview">
   <h4>Termine speciale</h4>
-  <p>
-  Questa è una descrizione breve che appare passando il mouse,
-  proprio come una preview enciclopedica.
-  </p>
-   <img src="img/icant.jpg" alt="Termine speciale">
+  <img src="img/termine1.jpg" alt="Termine speciale">
+  <p>Testo di esempio che verrà sostituito automaticamente dal JS.</p>
 </div>
 
+<hr>
+
+<h2>Editor live</h2>
+<p>Scrivi qui e vedi l’anteprima immediata:</p>
+
+<textarea id="editor" rows="10" cols="80">Scrivi qui il tuo testo...</textarea>
+<div id="preview" style="border:1px solid #ccc; padding:10px; margin-top:10px;"></div>
+
 <script>
+// ---------------------- HOVER PREVIEW ----------------------
 document.querySelectorAll('.wiki-link').forEach(link => {
   const preview = document.getElementById(link.dataset.preview);
 
-  // Carica testo della pagina collegata (una sola volta)
+  // Carica testo della pagina collegata
   const url = link.getAttribute('href');
   fetch(url)
     .then(resp => resp.text())
@@ -44,13 +46,11 @@ document.querySelectorAll('.wiki-link').forEach(link => {
       }
     });
 
-  // Funzione per aggiornare la posizione del riquadro
   function updatePosition(e) {
     const rect = preview.getBoundingClientRect();
     let x = e.pageX + 15;
     let y = e.pageY + 15;
 
-    // Controllo bordi dello schermo
     if (x + rect.width > window.innerWidth) x = e.pageX - rect.width - 15;
     if (y + rect.height > window.innerHeight) y = e.pageY - rect.height - 15;
 
@@ -58,23 +58,31 @@ document.querySelectorAll('.wiki-link').forEach(link => {
     preview.style.top = y + 'px';
   }
 
-  // Mostra la preview e avvia fade-in
   link.addEventListener('mouseenter', e => {
     preview.classList.add('show');
     updatePosition(e);
   });
 
-  // Muove la preview seguendo il mouse
   link.addEventListener('mousemove', e => {
     updatePosition(e);
   });
 
-  // Nasconde la preview con fade-out
   link.addEventListener('mouseleave', () => {
     preview.classList.remove('show');
   });
 });
+
+// ---------------------- EDITOR LIVE ----------------------
+const editor = document.getElementById('editor');
+const preview = document.getElementById('preview');
+
+function updatePreview() {
+  preview.innerHTML = editor.value;
+}
+
+editor.addEventListener('input', updatePreview);
+updatePreview();
 </script>
 
 </body>
-</html>
+</html>>
