@@ -3,7 +3,7 @@ body {
   font-family: sans-serif;
   max-width: 800px;
   margin: auto;
-  line-height: 2;
+  line-height: 1;
 }
 p, h1, h2 {
     margin: 0; /* Elimina lo spazio sopra e sotto i testi */
