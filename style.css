@@ -7,7 +7,7 @@ body {
 }
 p, h1, h2 {
     margin: 0; /* Elimina lo spazio sopra e sotto i testi */
-    padding: 2px 0; /* Aggiunge solo un minimo di respiro */
+    padding: -20px 0; /* Aggiunge solo un minimo di respiro */
 }
 /* Link */
 a {
