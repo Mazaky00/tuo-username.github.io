@@ -47,4 +47,30 @@ a:hover {
 .wiki-preview img:not([src]) {
   display: none;
 }
+/* TEMA SCURO */
+body.dark {
+  background-color: #121212;
+  color: #e0e0e0;
+}
 
+body.dark a {
+  color: #82aaff;
+}
+
+body.dark a:hover {
+  color: #aabfff;
+}
+
+body.dark .wiki-preview {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  box-shadow: 0 2px 8px rgba(0,0,0,.7);
+}
+
+body.dark .wiki-preview p {
+  color: #e0e0e0;
+}
+
+body.dark .wiki-preview h4 {
+  color: #ffffff;
+}
