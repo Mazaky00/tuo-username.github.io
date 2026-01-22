@@ -22,14 +22,7 @@ Questo è un <a class="wiki-link" href="termine1.html" data-preview="termine1">t
 
 <hr>
 
-<h2>Editor live</h2>
-<p>Scrivi qui e vedi l’anteprima immediata:</p>
 
-<textarea id="editor" rows="10" cols="80">Scrivi qui il tuo testo...</textarea>
-<div id="preview" style="border:1px solid #ccc; padding:10px; margin-top:10px;"></div>
-  
-<button id="saveBtn">💾 Salva su GitHub</button>
-<p id="saveStatus"></p>
 <script>
 // ---------------------- HOVER PREVIEW ----------------------
 document.querySelectorAll('.wiki-link').forEach(link => {
@@ -72,71 +65,6 @@ document.querySelectorAll('.wiki-link').forEach(link => {
   link.addEventListener('mouseleave', () => {
     preview.classList.remove('show');
   });
-});
-
-// ---------------------- EDITOR LIVE ----------------------
-const editor = document.getElementById('editor');
-const preview = document.getElementById('preview');
-
-function updatePreview() {
-  preview.innerHTML = editor.value;
-}
-
-editor.addEventListener('input', updatePreview);
-updatePreview();
-  const saveBtn = document.getElementById('saveBtn');
-const saveStatus = document.getElementById('saveStatus');
-
-// --- CONFIGURA QUI ---
-const repoOwner = 'mazaky00';      // tuo username GitHub
-const repoName = 'tuo-repo';       // nome del repository
-const filePath = 'contenuto.html'; // file che vuoi aggiornare
-const branch = 'main';             // branch
-const githubToken = 'INSERISCI_IL_TUO_TOKEN_QUI';
-
-// Funzione Save
-saveBtn.addEventListener('click', async () => {
-  saveStatus.innerText = 'Salvataggio in corso...';
-
-  try {
-    // Primo passo: ottieni SHA del file se esiste
-    const getRes = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}?ref=${branch}`, {
-      headers: { Authorization: `token ${githubToken}` }
-    });
-
-    let sha = null;
-    if(getRes.status === 200) {
-      const data = await getRes.json();
-      sha = data.sha;
-    }
-
-    // Secondo passo: salva il contenuto
-    const content = btoa(unescape(encodeURIComponent(editor.value))); // base64
-
-    const res = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `token ${githubToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: 'Aggiornamento dal MiniWiki editor',
-        content: content,
-        branch: branch,
-        sha: sha
-      })
-    });
-
-    if(res.ok) {
-      saveStatus.innerText = '✅ Salvataggio completato!';
-    } else {
-      const err = await res.json();
-      saveStatus.innerText = '❌ Errore: ' + err.message;
-    }
-
-  } catch(err) {
-    saveStatus.innerText = '❌ Errore: ' + err.message;
-  }
 });
 </script>
 
