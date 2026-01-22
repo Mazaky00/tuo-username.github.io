@@ -28,19 +28,49 @@ Questo è un testo di prova con un
 </div>
 
 <script>
-link.addEventListener('mouseenter', e => {
-  preview.classList.add('show');
-  const rect = preview.getBoundingClientRect();
-  let x = e.pageX + 15;
-  let y = e.pageY + 15;
-  if (x + rect.width > window.innerWidth) x = e.pageX - rect.width - 15;
-  if (y + rect.height > window.innerHeight) y = e.pageY - rect.height - 15;
-  preview.style.left = x + 'px';
-  preview.style.top = y + 'px';
-});
+document.querySelectorAll('.wiki-link').forEach(link => {
+  const preview = document.getElementById(link.dataset.preview);
 
-link.addEventListener('mouseleave', () => {
-  preview.classList.remove('show');
+  // Carica testo della pagina (solo una volta)
+  const url = link.getAttribute('href');
+  fetch(url)
+    .then(resp => resp.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const firstParagraph = doc.querySelector('p');
+      if(firstParagraph) {
+        preview.querySelector('p').innerText = firstParagraph.innerText;
+      }
+    });
+
+  // Funzione per aggiornare posizione
+  function updatePosition(e) {
+    const rect = preview.getBoundingClientRect();
+    let x = e.pageX + 15;
+    let y = e.pageY + 15;
+
+    if (x + rect.width > window.innerWidth) x = e.pageX - rect.width - 15;
+    if (y + rect.height > window.innerHeight) y = e.pageY - rect.height - 15;
+
+    preview.style.left = x + 'px';
+    preview.style.top = y + 'px';
+  }
+
+  // Mostra preview e attiva follow
+  link.addEventListener('mouseenter', e => {
+    preview.classList.add('show');
+    updatePosition(e);
+  });
+
+  link.addEventListener('mousemove', e => {
+    updatePosition(e);
+  });
+
+  // Nascondi preview
+  link.addEventListener('mouseleave', () => {
+    preview.classList.remove('show');
+  });
 });
 </script>
 
