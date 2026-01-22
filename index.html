@@ -34,17 +34,7 @@ document.querySelectorAll('.wiki-link').forEach(link => {
   const preview = document.getElementById(link.dataset.preview);
 
   // Carica testo della pagina collegata
-  const url = link.getAttribute('href');
-  fetch(url)
-    .then(resp => resp.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const firstParagraph = doc.querySelector('p');
-      if(firstParagraph) {
-        preview.querySelector('p').innerText = firstParagraph.innerText;
-      }
-    });
+
 
   function updatePosition(e) {
     const rect = preview.getBoundingClientRect();
