@@ -117,6 +117,27 @@ document.querySelectorAll('.wiki-link').forEach(link => {
   });
 });
 </script>
+<script>
+// Seleziona tutti i link che puntano a pagine interne (stesso dominio)
+document.querySelectorAll('a[href]').forEach(link => {
+    // Controlla che il link sia relativo o stesso dominio
+    const url = new URL(link.href, location.origin);
+    if (url.origin === location.origin) {
+        link.addEventListener('click', () => {
+            // Salva la posizione corrente dello scroll
+            sessionStorage.setItem('scrollY', window.scrollY);
+        });
+    }
+});
 
+// Quando la pagina viene caricata, scrolla alla posizione salvata
+window.addEventListener('load', () => {
+    const scrollY = sessionStorage.getItem('scrollY');
+    if (scrollY !== null) {
+        window.scrollTo(0, parseInt(scrollY));
+        sessionStorage.removeItem('scrollY'); // pulisce il dato
+    }
+});
+</script>
 </body>
 </html>
